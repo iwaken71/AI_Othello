@@ -9,7 +9,7 @@ import audioService from './services/AudioService'
 
 function App() {
   const [gameState, setGameState] = useState<GameState>(new GameState());
-  const [aiEnabled, setAIEnabled] = useState<boolean>(false);
+  const [aiEnabled, setAIEnabled] = useState<boolean>(true);
   // AIプレイヤーの設定 - 常に白固定
   const aiPlayer = Player.White;
   const [difficulty, setDifficulty] = useState<string>('medium');
@@ -91,6 +91,8 @@ function App() {
     setGameState(new GameState());
     setGameResult('');
     setIsThinking(false);
+    // AI対戦を有効化しておく
+    setAIEnabled(true);
     
     // 新しいゲーム開始時にBGMを開始
     audioService.playBGM();
