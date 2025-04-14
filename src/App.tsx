@@ -70,7 +70,7 @@ function App() {
 
   // プレイヤーが手を打った時の処理
   const handlePlayerMove = (row: number, col: number) => {
-    if (isThinking) return; // AI思考中は操作を無効化
+    if (isThinking) return; // AI思考中は操作を無効化するが、見た目は変えない
     
     const newGameState = gameState.makeMove(row, col);
     if (newGameState) {
@@ -122,8 +122,9 @@ function App() {
         <Board 
         gameState={gameState}
         onMove={handlePlayerMove}
-        isThinking={isThinking}
-        />
+        /* AI思考中でも盤面の見た目を変えない */
+          isThinking={false}
+      />
       </div>
     </div>
   )

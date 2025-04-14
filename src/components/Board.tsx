@@ -28,37 +28,39 @@ const Board: React.FC<BoardProps> = ({ gameState, onMove, isThinking = false }) 
   };
 
   return (
-    <div className={`board ${isThinking ? 'thinking' : ''}`}>
-      {/* 行と列の表示 */}
-      <div className="board-labels">
-        <div className="corner"></div>
-        {[...Array(8)].map((_, i) => (
-          <div key={`col-${i}`} className="column-label">{String.fromCharCode(65 + i)}</div>
-        ))}
-      </div>
-      
-      {/* ボード */}
-      <div className="board-grid">
-        {gameState.board.map((row, rowIndex) => (
-          <div key={`row-${rowIndex}`} className="board-row">
-            <div className="row-label">{rowIndex + 1}</div>
-            {row.map((cell, colIndex) => (
-              <Cell
-                key={`cell-${rowIndex}-${colIndex}`}
-                value={cell}
-                row={rowIndex}
-                col={colIndex}
-                isValid={isValidMove(rowIndex, colIndex) && !isThinking && !gameState.gameOver}
-                isLastMove={isLastMove(rowIndex, colIndex)}
-                onClick={(r, c) => {
-                  if (!isThinking && !gameState.gameOver) {
-                    onMove(r, c);
-                  }
-                }}
-              />
-            ))}
-          </div>
-        ))}
+    <div className="board-wrapper">
+      <div className="board">
+        {/* 行と列の表示 */}
+        <div className="board-labels">
+          <div className="corner"></div>
+          {[...Array(8)].map((_, i) => (
+            <div key={`col-${i}`} className="column-label">{String.fromCharCode(65 + i)}</div>
+          ))}
+        </div>
+        
+        {/* ボード */}
+        <div className="board-grid">
+          {gameState.board.map((row, rowIndex) => (
+            <div key={`row-${rowIndex}`} className="board-row">
+              <div className="row-label">{rowIndex + 1}</div>
+              {row.map((cell, colIndex) => (
+                <Cell
+                  key={`cell-${rowIndex}-${colIndex}`}
+                  value={cell}
+                  row={rowIndex}
+                  col={colIndex}
+                  isValid={isValidMove(rowIndex, colIndex) && !gameState.gameOver}
+                  isLastMove={isLastMove(rowIndex, colIndex)}
+                  onClick={(r, c) => {
+                    if (!gameState.gameOver) {
+                      onMove(r, c);
+                    }
+                  }}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

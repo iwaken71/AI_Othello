@@ -2,19 +2,23 @@
   width: 60px;
   height: 60px;
   background-color: #0a8000;
-  border: 1px solid #000;
+  /* セルの境界線を細くして目立たなくする */
+  border: 1px solid #086000;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   position: relative;
+  /* セルの背景色を固定 */
+  transition: none;
 }
 
 .disc {
   width: 80%;
   height: 80%;
   border-radius: 50%;
-  transition: all 0.3s ease;
+  /* 石のアニメーションを小さくして実用的な部分だけに */
+  transition: transform 0.2s ease;
 }
 
 .black {
@@ -31,6 +35,12 @@
   background-color: #0c9000;
 }
 
+/* 表示の一度不安定さを防止するためのスタイル */
+.valid, .last-move {
+  transition: none;
+  transform: none !important;
+}
+
 .valid-marker {
   width: 20%;
   height: 20%;
@@ -39,7 +49,8 @@
 }
 
 .last-move {
-  background-color: #0e6000;
+  /* 明るい緑色の背景色を使用し、青い印象を避ける */
+  background-color: #0e8000;
 }
 
 @media (max-width: 500px) {

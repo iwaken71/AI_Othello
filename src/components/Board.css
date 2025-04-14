@@ -1,33 +1,83 @@
-.board {
+.board-wrapper {
+  padding: 0;
+  margin: 0;
+  background-color: #0a8000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}.board {
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #0a8000;
-  border: 2px solid #000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  /* 外線を細くして目立たなくする */
+  border: 1px solid #085000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   position: relative;
+  /* トランスフォームを避ける */
+  transform: none !important;
+  /* 外側の色を緑に変更 - 外枚なし */
+  outline: none;
 }
 
-.board.thinking::after {
-  content: '';
+/* AI思考中のバナーのみ表示し、盤面の変化をなくす */
+.board.thinking {
+  /* 特別なスタイルなし - 通常と同じ見た目を維持 */
+}
+
+.thinking-indicator {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.2);
-  z-index: 10;
-  pointer-events: none;
+  top: 10px;
+  right: 10px;
+  z-index: 20;
+  /* 緑のテーマに合わせたデザイン */
+  background-color: rgba(8, 80, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  /* トランジションを無しにし、直接表示 */
+  transition: none;
+  /* 常に同じ位置に表示 */
+  transform: none !important;
+}
+
+.thinking-dot {
+  width: 8px;
+  height: 8px;
+  background-color: white;
+  border-radius: 50%;
+  animation: pulse 1.4s infinite ease-in-out;
+}
+
+.thinking-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.thinking-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(0.4); opacity: 0.6; }
+  50% { transform: scale(1); opacity: 1; }
 }
 
 .board-labels {
   display: flex;
   margin-bottom: 4px;
+  /* 列ラベルの背景を緑に */
+  background-color: #0a8000;
 }
 
 .corner {
   width: 30px;
   height: 30px;
+  background-color: #0a8000;
 }
 
 .column-label {
@@ -38,11 +88,15 @@
   align-items: center;
   font-weight: bold;
   color: white;
+  background-color: #0a8000;
 }
 
 .board-grid {
   display: flex;
   flex-direction: column;
+  background-color: #0a8000;
+  /* ギャップをなくしてシームレスな表示に */
+  gap: 0;
 }
 
 .board-row {
@@ -57,6 +111,7 @@
   align-items: center;
   font-weight: bold;
   color: white;
+  background-color: #0a8000;
 }
 
 @media (max-width: 500px) {

@@ -134,27 +134,25 @@ export class GameState {
     const newBoard = this.cloneBoard(this.board);
     newBoard[row][col] = this.currentPlayer;
     
-    // 石を置く音を再生
+    // 石を置く音だけを再生 - アニメーションを簡素に
     audioService.playSoundEffect('place');
     
     // すべての方向について石を反転する石を特定
-    let flipped = false;
     let flipsToMake: Position[] = [];
     DIRECTIONS.forEach(dir => {
       const flips = this.wouldFlip(row, col, dir.row, dir.col, this.currentPlayer);
       if (flips.length > 0) {
-        flipped = true;
         flipsToMake = [...flipsToMake, ...flips];
       }
     });
     
-    // 全ての石を反転
-    flipsToMake.forEach(pos => {
-      newBoard[pos.row][pos.col] = this.currentPlayer;
-    });
-    
-    // 石を反転する音を再生
+    // 石を一度に反転 - 変化が全て同時に起こるように
     if (flipsToMake.length > 0) {
+      flipsToMake.forEach(pos => {
+        newBoard[pos.row][pos.col] = this.currentPlayer;
+      });
+      
+      // 反転音を再生 - 1回だけ
       audioService.playSoundEffect('flip');
     }
     
