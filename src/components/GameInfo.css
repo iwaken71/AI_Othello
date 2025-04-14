@@ -49,26 +49,59 @@ h2 {
   padding: 10px;
   background-color: #e9e9e9;
   border-radius: 4px;
+  /* 高さを完全に固定 - 変動しないように */
+  height: 100px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ステータス表示用の固定高さコンテナ */
+.status-container {
+  height: 40px; /* min-heightではなく固定高さに */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* 内容が多すぎる場合は隠す */
+  margin-top: 5px;
+}
+
+/* 何も表示しないときのプレースホルダー */
+.status-placeholder {
+  height: 31px; /* thinking要素と同じ高さ */
+  width: 100%;
 }
 
 .thinking {
-  display: inline-block;
-  margin-top: 8px;
+  display: block;
   padding: 5px 10px;
+  width: 100%;
   /* 通常のメッセージ風に変更 */
   background-color: rgba(0, 0, 0, 0.1);
   color: #333;
   font-weight: bold;
   border-radius: 4px;
-  /* アニメーションは最小限に */
-  animation: none;
+  text-align: center;
+  /* 高さを固定 */
+  height: 31px;
+  box-sizing: border-box;
+  margin: 0;
+  line-height: 20px;
 }
 
 .game-result {
-  font-size: 1.2rem;
+  display: block;
+  width: 100%;
+  padding: 5px 10px;
   font-weight: bold;
   color: #d35400;
-  margin-top: 8px;
+  text-align: center;
+  /* 高さを固定 */
+  height: 31px;
+  box-sizing: border-box;
+  margin: 0;
+  line-height: 20px;
 }
 
 @keyframes pulse {

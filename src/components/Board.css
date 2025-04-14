@@ -25,25 +25,9 @@
   /* 特別なスタイルなし - 通常と同じ見た目を維持 */
 }
 
+/* AI思考中のバナーを完全に非表示にする */
 .thinking-indicator {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 20;
-  /* 緑のテーマに合わせたデザイン */
-  background-color: rgba(8, 80, 0, 0.8);
-  color: white;
-  padding: 8px 12px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  /* トランジションを無しにし、直接表示 */
-  transition: none;
-  /* 常に同じ位置に表示 */
-  transform: none !important;
+  display: none;
 }
 
 .thinking-dot {

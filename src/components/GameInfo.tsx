@@ -68,8 +68,16 @@ const GameInfo: React.FC<GameInfoProps> = ({
       
       <div className="current-player">
         <p>現在の手番: <strong>{getPlayerName(currentPlayer)}</strong></p>
-        {isThinking && <p className="thinking">AIが考え中...</p>}
-        {gameResult && <p className="game-result">{gameResult}</p>}
+        {/* 固定高さのステータス表示コンテナ */}
+        <div className="status-container">
+          {isThinking ? (
+            <p className="thinking">AIが考え中...</p>
+          ) : gameResult ? (
+            <p className="game-result">{gameResult}</p>
+          ) : (
+            <div className="status-placeholder"></div>
+          )}
+        </div>
       </div>
       
       <div className="ai-settings">

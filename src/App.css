@@ -20,11 +20,22 @@
   /* ゲームコンテナの位置固定 */
   transition: none;
   transform: none !important;
+  width: 100%;
+  max-width: 1000px;
 }
 
 @media (min-width: 768px) {
   .game-container {
     flex-direction: row;
     align-items: flex-start;
+    /* 可能な限りレイアウトを変えないようにする */
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+
+  .game-info {
+    /* 幅を固定してレイアウト変更を防止 */
+    width: 300px;
+    flex-shrink: 0;
   }
 }
