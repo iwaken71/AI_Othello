@@ -1,16 +1,16 @@
 import React from 'react';
 import { GameState } from '../models/GameState';
-import { Position } from '../models/Position';
 import Cell from './Cell';
 import './Board.css';
 
 interface BoardProps {
   gameState: GameState;
   onMove: (row: number, col: number) => void;
-  isThinking?: boolean;
+  // isThinkingは実験時に必要に応じて使用するため@ts-ignoreで扱います
+  isThinking?: boolean; 
 }
 
-const Board: React.FC<BoardProps> = ({ gameState, onMove, isThinking = false }) => {
+const Board: React.FC<BoardProps> = ({ gameState, onMove }) => {
   // 有効な手であるかをチェックする関数
   const isValidMove = (row: number, col: number): boolean => {
     return gameState.validMoves.some(

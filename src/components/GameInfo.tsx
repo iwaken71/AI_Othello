@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Player } from '../models/Player';
 import SoundSettings from './SoundSettings';
 import './GameInfo.css';

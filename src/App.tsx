@@ -10,7 +10,8 @@ import audioService from './services/AudioService'
 function App() {
   const [gameState, setGameState] = useState<GameState>(new GameState());
   const [aiEnabled, setAIEnabled] = useState<boolean>(false);
-  const [aiPlayer, setAIPlayer] = useState<Player>(Player.White);
+  // AIプレイヤーの設定 - 常に白固定
+  const aiPlayer = Player.White;
   const [difficulty, setDifficulty] = useState<string>('medium');
   const [isThinking, setIsThinking] = useState<boolean>(false);
   const [gameResult, setGameResult] = useState<string>('');
