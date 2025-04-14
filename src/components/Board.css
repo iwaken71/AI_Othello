@@ -1,0 +1,59 @@
+.board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #0a8000;
+  border: 2px solid #000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.board-labels {
+  display: flex;
+  margin-bottom: 4px;
+}
+
+.corner {
+  width: 30px;
+  height: 30px;
+}
+
+.column-label {
+  width: 60px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: white;
+}
+
+.board-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.board-row {
+  display: flex;
+}
+
+.row-label {
+  width: 30px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: white;
+}
+
+@media (max-width: 500px) {
+  .corner, .row-label {
+    width: 20px;
+    height: 40px;
+  }
+  
+  .column-label {
+    width: 40px;
+    height: 20px;
+  }
+}
