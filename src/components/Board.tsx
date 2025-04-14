@@ -28,7 +28,7 @@ const Board: React.FC<BoardProps> = ({ gameState, onMove, isThinking = false }) 
   };
 
   return (
-    <div className="board">
+    <div className={`board ${isThinking ? 'thinking' : ''}`}>
       {/* 行と列の表示 */}
       <div className="board-labels">
         <div className="corner"></div>

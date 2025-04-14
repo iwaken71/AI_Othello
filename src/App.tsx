@@ -5,6 +5,7 @@ import GameInfo from './components/GameInfo'
 import { GameState } from './models/GameState'
 import { Player } from './models/Player'
 import { AIPlayer } from './services/AIPlayer'
+import audioService from './services/AudioService'
 
 function App() {
   const [gameState, setGameState] = useState<GameState>(new GameState());
@@ -23,16 +24,26 @@ function App() {
       setIsThinking(true);
       
       // AIに手を考えさせる
-      AIPlayer.makeMove(gameState, aiPlayer, difficulty, (newGameState) => {
-        setIsThinking(false);
-        
-        if (newGameState) {
-          setGameState(newGameState);
-          
-          // ゲーム終了チェック
-          if (newGameState.gameOver) {
-            updateGameResult(newGameState);
-          }
+      AIPlayer.getMove(gameState, difficulty).then(move => {
+        if (move) {
+          // AIが選んだ手を少し遅延して実行
+          setTimeout(() => {
+            const newGameState = gameState.makeMove(move.row, move.col);
+            
+            if (newGameState) {
+              setGameState(newGameState);
+              
+              // ゲーム終了チェック
+              if (newGameState.gameOver) {
+                updateGameResult(newGameState);
+              }
+            }
+            
+            setIsThinking(false);
+          }, 300); // 石を置くアクションの遅延
+        } else {
+          // 有効な手がない場合
+          setIsThinking(false);
         }
       });
     }
@@ -69,6 +80,9 @@ function App() {
       if (newGameState.gameOver) {
         updateGameResult(newGameState);
       }
+    } else {
+      // 無効な手の場合の音
+      audioService.playSoundEffect('invalid');
     }
   };
 
@@ -76,6 +90,9 @@ function App() {
     setGameState(new GameState());
     setGameResult('');
     setIsThinking(false);
+    
+    // 新しいゲーム開始時にBGMを開始
+    audioService.playBGM();
   };
 
   const handleAIToggle = (enabled: boolean) => {

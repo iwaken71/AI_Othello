@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Player } from '../models/Player';
+import SoundSettings from './SoundSettings';
 import './GameInfo.css';
 
 interface GameInfoProps {
@@ -97,6 +98,8 @@ const GameInfo: React.FC<GameInfoProps> = ({
         )}
       </div>
       
+      <SoundSettings />
+
       <button className="new-game-button" onClick={onNewGame}>
         新しいゲーム
       </button>

@@ -15,49 +15,40 @@ export class AIPlayer {
     difficulty: string = 'medium'
   ): Promise<Position | null> {
     return new Promise((resolve) => {
-      // 短い遅延を入れて、AIが「考えている」ように見せる
+      // 難易度に応じた思考時間を設定
+      let thinkingTime = 800; // デフォルト
+      
+      switch(difficulty) {
+        case 'easy':
+          thinkingTime = 600; // 簡単な難易度では短め
+          break;
+        case 'medium':
+          thinkingTime = 1000; // 中級では少し長め
+          break;
+        case 'hard':
+          thinkingTime = 1500; // 難しい難易度ではさらに長め
+          break;
+      }
+      
+      // AIの「思考時間」
       setTimeout(() => {
         const move = MinimaxAI.findBestMove(gameState, difficulty);
         resolve(move);
-      }, 500);
+      }, thinkingTime);
     });
   }
 
   /**
-   * AIが現在のプレイヤーなら手を打つ
+   * AIが現在のプレイヤーかどうかチェック
    * @param gameState 現在のゲーム状態
    * @param aiPlayer AIのプレイヤー（黒または白）
-   * @param difficulty 難易度
-   * @param callback AIが手を打った後に呼び出されるコールバック関数
+   * @returns AIのターンかどうか
    */
-  public static async makeMove(
+  public static isAITurn(
     gameState: GameState,
-    aiPlayer: Player,
-    difficulty: string,
-    callback: (newGameState: GameState | null) => void
-  ): Promise<void> {
-    // 現在のプレイヤーがAIでない場合は何もしない
-    if (gameState.currentPlayer !== aiPlayer) {
-      callback(null);
-      return;
-    }
-    
-    // ゲーム終了している場合は何もしない
-    if (gameState.gameOver) {
-      callback(null);
-      return;
-    }
-    
-    // AIの手を取得
-    const move = await this.getMove(gameState, difficulty);
-    
-    if (move) {
-      // 手を実行
-      const newGameState = gameState.makeMove(move.row, move.col);
-      callback(newGameState);
-    } else {
-      // 有効な手がない場合はパス
-      callback(null);
-    }
+    aiPlayer: Player
+  ): boolean {
+    // 現在のプレイヤーがAIかつゲーム終了していない場合
+    return gameState.currentPlayer === aiPlayer && !gameState.gameOver;
   }
 }

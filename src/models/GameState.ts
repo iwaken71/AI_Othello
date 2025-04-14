@@ -1,5 +1,6 @@
 import { Player, getOpponent } from './Player';
 import { Position, DIRECTIONS } from './Position';
+import audioService from '../services/AudioService';
 
 export class GameState {
   board: Player[][];
@@ -133,17 +134,29 @@ export class GameState {
     const newBoard = this.cloneBoard(this.board);
     newBoard[row][col] = this.currentPlayer;
     
-    // すべての方向について石を反転
+    // 石を置く音を再生
+    audioService.playSoundEffect('place');
+    
+    // すべての方向について石を反転する石を特定
     let flipped = false;
+    let flipsToMake: Position[] = [];
     DIRECTIONS.forEach(dir => {
       const flips = this.wouldFlip(row, col, dir.row, dir.col, this.currentPlayer);
       if (flips.length > 0) {
         flipped = true;
-        flips.forEach(pos => {
-          newBoard[pos.row][pos.col] = this.currentPlayer;
-        });
+        flipsToMake = [...flipsToMake, ...flips];
       }
     });
+    
+    // 全ての石を反転
+    flipsToMake.forEach(pos => {
+      newBoard[pos.row][pos.col] = this.currentPlayer;
+    });
+    
+    // 石を反転する音を再生
+    if (flipsToMake.length > 0) {
+      audioService.playSoundEffect('flip');
+    }
     
     // 次のプレイヤー
     const nextPlayer = getOpponent(this.currentPlayer);
@@ -169,6 +182,8 @@ export class GameState {
       // 両方のプレイヤーがパスした場合、ゲーム終了
       if (newGameState.validMoves.length === 0 || newGameState.passCount >= 2) {
         newGameState.gameOver = true;
+        // ゲーム終了音を再生
+        audioService.playSoundEffect('gameOver');
       }
     }
     
